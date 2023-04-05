@@ -10,21 +10,4 @@ class Questions(models.Model):
     sample_output = models.TextField()
 
 
-class Submission(models.Model):
-    LANGUAGE_CHOICES = (
-        ('python', 'Python'),
-        ('java', 'Java'),
-        ('cpp', 'C++'),
-    )
-    STATUS_CHOICES = (
-        ('pending', 'Pending'),
-        ('accepted', 'Accepted'),
-        ('rejected', 'Rejected'),
-    )
-    problem = models.ForeignKey(Questions, on_delete=models.CASCADE)
-    language = models.CharField(max_length=50, choices=LANGUAGE_CHOICES)
-    code = models.TextField()
-    result = models.CharField(max_length=50, choices=STATUS_CHOICES, default='pending')
 
-    def __str__(self):
-        return f'{self.problem.name} - {self.language}'

@@ -10,7 +10,7 @@
     <h1><strong>Questions</strong></h1>
     <ul>
       {% for x in myquestions %}
-          <h3><li onclick="window.location = 'details/{{ x.problem_id }}'"> {{ x.problem_title}}</li></h3>
+          <h3><a href = "details/{{ x.problem_id }}"> {{ x.problem_title}}</a></h3>
       {% endfor %}
     </ul>
   </div>

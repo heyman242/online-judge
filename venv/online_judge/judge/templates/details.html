@@ -10,101 +10,23 @@
 </head>
 <body>
   <div class="row">
-      <div class="col-5" style="height: 100vh; border: 1px solid rgb(0, 0, 0); margin-left: 30px;margin-top: 25px; overflow-y: auto;">
+      <div class="col-7" style="height: 90vh; border: 1px solid rgb(0, 0, 0); margin-left: 300px;margin-top: 25px; overflow-y: auto;">
         <div class="container-fluid">
           <h1><u>{{  myquestions.problem_title }}</u></h1>
           </div>
-          
+
          <h2><strong>Problem Statement:</strong></h2>
-
           <pre>{{ myquestions.problem_description }}</pre>
-
-          <h3><strong> CODING LANGUAGE:</strong></h3>
-          <select id="language-select">
-            <option value="c_cpp">C++</option>
-            <option value="java">Java</option>
-            <option value="python">Python</option>
-          </select>
-
-          <br><br>    
           <h3>Sample Input:</h3>
           <pre>{{ myquestions.sample_input }}</pre>
-        
+
           <h3>Sample Output:</h3>
           <pre>{{ myquestions.sample_output }}</pre>
 
-          
+          <br>
+          <h1><a href="{% url 'judge:create_code_snippet' myquestions.problem_id%}" class="btn btn-primary">submit code</a></h1>
       </div>
-   
-      <head>
-        <meta charset="utf-8">
-         <title>Code Editor</title>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-c_cpp.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-java.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/mode-python.js"></script>
-       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/theme-monokai.js"></script>
-       <style>
-        .editor-container {
-        width: 700px;
-        height: 100vh;
-        margin-left: 25px; 
-        margin-top: 25px;
-        position: relative;
-      }
-        #editor {
-        position: absolute;
-        left: 0;
-        right: 0;
-        top: 0;
-        bottom: 0;
-        height: 100%;
-        width: 100%;
-        font-size: 15px;
-      }
-       </style>
-      </head>
-      <body>
-  <div class="editor-container">
-  <form method="POST" action="/">
-    {% csrf_token %}
-    {{ form.code}}
-    <div id="editor" class="col-15">//write your code here</div>
-    <input type="hidden" name="problem" value="{{ question.pk }}">
-
-
-  </form>
-</div>
-   <button type="button" id="run-code-btn" class="btn btn-success" style="margin-left: 1000px">Run Code</button>
-
-  <script>
-    var editor = ace.edit("editor");
-    var languageSelect = document.getElementById("language-select");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/c_cpp");
-
-    languageSelect.addEventListener("change", function() {
-      var language = languageSelect.value;
-      if (language === "c_cpp") {
-        editor.session.setMode("ace/mode/c_cpp");
-      } else if (language === "java") {
-        editor.session.setMode("ace/mode/java");
-      } else if (language === "python") {
-        editor.session.setMode("ace/mode/python");
-      }
-    });
-
-
-        </script>
-    </body>
-
-
-
-    </div>
-    </div>
-</body>
+ </body>
 <br><br>
-
-
 
 {% endblock %}

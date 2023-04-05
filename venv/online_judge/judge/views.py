@@ -26,7 +26,7 @@ def details(request, id,):
         if form.is_valid():
             submission = form.save(commit=False)
             submission.save()
-            return redirect('submission_detail', pk=submission.pk)
+          return redirect('submission_detail', pk=submission.pk)
     else:
         form = SubmissionForm(instance=submission)
     context = {
@@ -34,6 +34,8 @@ def details(request, id,):
         'form': form,
     }
     return render(request, 'details.html', context)
+
+
 
 
 def main(request):

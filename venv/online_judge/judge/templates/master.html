@@ -1,0 +1,37 @@
+<style>
+
+	body{
+		background-color: #aadcdf;
+        font-family: Courier;
+      color: rgb(0, 0, 0);
+	}
+    
+    .row {
+      background-color: rgb(255, 255, 255);
+      color:rgb(0, 0, 0);     
+}
+    .col-5{
+      background-color: rgb(255, 255, 255);
+      color:rgb(0, 0, 0);
+    }
+
+
+</style>
+
+<!DOCTYPE html>
+<html>
+<head>
+  <title>{% block title %}{% endblock %}</title>
+</head>
+<body>
+
+<div class="topnav">
+  <button><a href="/">HOME</a></button> 
+  <button> <a href="/questions">QUESTIONS LIST</a></button> 
+</div>
+
+{% block content %}
+{% endblock %}
+
+</body>
+</html>

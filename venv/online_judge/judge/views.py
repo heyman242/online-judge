@@ -25,7 +25,7 @@ def details(request, id, ):
 
 def main(request):
     template = loader.get_template('main.html')
-    return HttpResponse(template.render())
+    return HttpResponse(template.render(request=request))
 
 
 def create_code_snippet(request, id):
@@ -33,10 +33,15 @@ def create_code_snippet(request, id):
     if request.method == 'POST':
         form = CodeSnippetForm(request.POST)
         if form.is_valid():
+            print("1")
             code_snippet = form.save(commit=False)
             code_snippet.question = question
             code_snippet.save()
-            return redirect('code_snippet_list')
+            print("3")
+            return HttpResponse("create_code_snippet_success")
     else:
         form = CodeSnippetForm()
     return render(request, 'create_code_snippet.html', {'form': form, 'question': question})
+
+
+

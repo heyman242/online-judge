@@ -15,9 +15,16 @@ def __str__(self):
 
 
 class CodeSnippet(models.Model):
+    LANGUAGE_CHOICES = [
+        ('cpp', 'C++'),
+        ('python', 'Python'),
+        ('java', 'Java'),
+
+        # Add more languages and their display names here
+    ]
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
-    language = models.CharField(max_length=10)
+    language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES)
     code = models.TextField()
 
     def __str__(self):
-        return self.language
+        return self.code

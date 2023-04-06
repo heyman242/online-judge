@@ -6,8 +6,6 @@ urlpatterns = [
     path('', views.main, name='main'),
     path('questions/', views.questions, name='questions'),
     path('questions/details/<int:id>', views.details, name='details'),
-    #path('create-code-snippet/<int:id>', views.create_code_snippet, name='create_code_snippet'),
-    #path('questions/details/create-code-snippet/<int:id>', views.create_code_snippet, name='create_code_snippet'),
     path('create-code-snippet/<int:id>/', views.create_code_snippet, name='create_code_snippet'),
 
 ]

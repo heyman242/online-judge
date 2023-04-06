@@ -36,62 +36,46 @@
       </head>
       <body>
       <br>
-       <h3><strong>CODING LANGUAGE:</strong></h3>
-  <select id="language-select" style=" margin-left: 10px">
-    <option value="c_cpp">C++</option>
-    <option value="java">Java</option>
-    <option value="python">Python</option>
-  </select>
+<!--       <h3><strong>CODING LANGUAGE:</strong></h3>-->
+<!--  <select id="language-select" style=" margin-left: 10px">-->
+<!--    <option value="c_cpp">C++</option>-->
+<!--    <option value="java">Java</option>-->
+<!--    <option value="python">Python</option>-->
+<!--  </select>-->
 
-  <div class="editor-container">
-    <form method="POST" id="code-form" >
-      {% csrf_token %}
-      <input type="hidden" id="language" name="language" value="c_cpp">
-      <textarea name="code" id="code" style="display:none;"></textarea>
-      <div id="editor" class="col-15">//write your code here</div>
-      <button type="submit" id="run-code-btn" class="btn btn-success" style="margin-left: 885px;margin-top: -40px;">SubmitCode</button>
-    </form>
-  </div>
+      <div class="editor-container">
+        <form method="POST" >
+        {% csrf_token %}
+            {{ form.as_p }}
+<!--        <input type="hidden" name="question" value="{{ question.id }}">-->
+<!--        <div id="editor" class="col-15"></div>-->
+
+        <input type="submit" class="btn btn-success" style="margin-left: 10px;margin-top: 0px;">
+        </form>
+      </div>
   <script>
-    var editor = ace.edit("editor");
-    var languageSelect = document.getElementById("language-select");
-    editor.setTheme("ace/theme/monokai");
-    editor.session.setMode("ace/mode/c_cpp");
-
-    languageSelect.addEventListener("change", function() {
-      var language = languageSelect.value;
-      if (language === "c_cpp") {
+        var editor = ace.edit("editor");
+        var languageSelect = document.getElementById("language-select");
+        editor.setTheme("ace/theme/monokai");
         editor.session.setMode("ace/mode/c_cpp");
-      } else if (language === "java") {
-        editor.session.setMode("ace/mode/java");
-      } else if (language === "python") {
-        editor.session.setMode("ace/mode/python");
-      }
-    });
 
-   var form = document.querySelector('#my-form');
-
-form.addEventListener('submit', function(event) {
-  event.preventDefault();
-
-  var xhr = new XMLHttpRequest();
-  var url = form.action;
-  var csrf_token = document.querySelector('input[name="csrfmiddlewaretoken"]').value;
-  var data = new FormData(form);
-
-  xhr.open('POST', url, true);
-  xhr.setRequestHeader('X-CSRFToken', csrf_token);
-
-  xhr.onreadystatechange = function() {
-    if (xhr.readyState === 4 && xhr.status === 200) {
-      console.log('Form submitted successfully!');
-    } else {
-      console.error('Form submission failed with status code ' + xhr.status);
-    }
-  };
-
-  xhr.send(data);
-});
+        languageSelect.addEventListener("change", function() {
+        var language = languageSelect.value;
+        if (language === "c_cpp") {
+         editor.session.setMode("ace/mode/c_cpp");
+        } else if (language === "java") {
+            editor.session.setMode("ace/mode/java");
+        } else if (language === "python") {
+          editor.session.setMode("ace/mode/python");
+        }
+        });
+         var form = document.querySelector('form');
+         form.addEventListener('submit', function(event) {
+            event.preventDefault();
+            var codeInput = document.getElementById('code');
+            codeInput.value = editor.getValue();
+            form.submit();
+         });
         </script>
     </body>
 {% endblock %}

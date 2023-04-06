@@ -45,10 +45,13 @@
 
       <div class="editor-container">
         <form method="POST" >
+
         {% csrf_token %}
             {{ form.as_p }}
 <!--        <input type="hidden" name="question" value="{{ question.id }}">-->
-<!--        <div id="editor" class="col-15"></div>-->
+<!--        <textarea id="editor" class="col-15"></textarea>-->
+
+
 
         <input type="submit" class="btn btn-success" style="margin-left: 10px;margin-top: 0px;">
         </form>

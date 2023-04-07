@@ -129,3 +129,6 @@ STATICFILES_DIRS = [BASE_DIR / "static"]
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+JD_API_CLIENT_ID = '5fb5c768380ffc38b5a4e2e45bad927'
+JD_API_CLIENT_SECRET = '204ac5246df772b4c09186fb6d377ff7b3b6f76858df374767da706d2f78c0ad'

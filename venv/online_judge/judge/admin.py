@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Questions, CodeSnippet
+from .models import Questions, CodeSnippet, test_cases
 
 
 class QuestionsAdmin(admin.ModelAdmin):
@@ -13,3 +13,7 @@ class CodeSnippetInline(admin.TabularInline):
     model = CodeSnippet
 
     admin.site.register(CodeSnippet)
+
+
+class test_casesAdmin(admin.ModelAdmin):
+    admin.site.register(test_cases)

@@ -20,7 +20,6 @@ class CodeSnippet(models.Model):
         ('python', 'Python'),
         ('java', 'Java'),
 
-        # Add more languages and their display names here
     ]
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
     language = models.CharField(max_length=10, choices=LANGUAGE_CHOICES)
@@ -28,3 +27,14 @@ class CodeSnippet(models.Model):
 
     def __str__(self):
         return self.code
+
+
+class test_cases(models.Model):
+    question = models.ForeignKey(Questions, on_delete=models.CASCADE)
+    inputs = models.JSONField()
+    outputs = models.JSONField()
+
+    # def __str__(self):
+    #     return f"{self.question} - inputs: {json.dumps(self.inputs)}, outputs: {json.dumps(self.outputs)}"
+
+# With this implementation, when you call str(test_case), it will return a string representation of the test case with the inputs and outputs fields as JSON strings.

@@ -1,7 +1,5 @@
-{% extends "master.html" %}
-
-{% block content %}
-
+<!DOCTYPE html>
+<html>
 <head>
     <title>C++ Compiler</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -12,44 +10,70 @@
             var editor = ace.edit("editor");
             editor.setTheme("ace/theme/twilight");
             editor.session.setMode("ace/mode/c_cpp");
-            editor.setOptions({ fontSize: "15pt"});
 
-            $('form').submit(function(event) {
-                // Prevent the form from submitting normally
+            $('#compile-btn').click(function(event) {
                 event.preventDefault();
-
-                // Send an AJAX POST request to the server
                 $.ajax({
                     type: 'POST',
-
                     data: {
                         'code': editor.getValue(),
-                        'input': $('textarea[name="input"]').val(),
+                        'input': $('#input').val(),
                         csrfmiddlewaretoken: '{{ csrf_token }}'
                     },
                     success: function(response) {
-                        // Update the output element with the response text
                         $('#output').text(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
                     }
                 });
             });
+
+            $('#test-btn').click(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        'code': editor.getValue(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    dataType: 'json',
+                    success: function(results) {
+                        $('#test-output').empty();
+                        $.each(results, function(index, result) {
+                            $('#test-output').append('<p>Input: ' + result.input + '</p>');
+                            $('#test-output').append('<p>Output: ' + result.output + '</p>');
+                            $('#test-output').append('<p>Result: ' + result.result + '</p>');
+                            $('#test-output').append('<hr>');
+                        });
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+            });
+
+
+
         });
     </script>
 </head>
 <body>
-<br>
-    <div id="editor" style="height: 700; width: 900;"></div>
-    <form method="post">
-        {% csrf_token %}
-        <label for="input" style="margin-left: 920px;margin-top: -700px;">Enter input for your program:</label><br>
-        <textarea name="input" rows="2" cols="30" style="margin-left: 920px;margin-top: -650px;"></textarea><br>
-        <input type="submit" value="Compile and Run" class="btn btn-success" style="margin-left: 750px;margin-top: 0px;">
-    </form>
+    <div id="editor" style="height: 500px; width: 50%;"></div>
+    <br>
+    <button id="compile-btn">Compile and Run</button>
 
-    <h3><p style="margin-top: -50px;">Output:</p></h3>
-    <h3><pre id="output" style="margin-left: 10px" ><strong>{{output}}</strong></pre></h3>
+    <br><br>
+    <label for="input">Enter input for your program:</label><br>
+    <textarea id="input" rows="5" cols="50"></textarea><br>
+    <p>Output:</p>
+    <pre id="output"></pre>
+
+    <br><br>
+    <button id="test-btn">Test against input.txt and output.txt</button>
+    <p>Test Results:</p>
+    <pre id="test-output"></pre>
+
+
 </body>
 </html>
-
-
-{% endblock %}

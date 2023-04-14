@@ -1,79 +1,89 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>C++ Compiler</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
-    <script>
-        $(document).ready(function() {
-            // Initialize the Ace CodeEditor instance
-            var editor = ace.edit("editor");
-            editor.setTheme("ace/theme/twilight");
-            editor.session.setMode("ace/mode/c_cpp");
+{% extends 'master.html' %}
 
-            $('#compile-btn').click(function(event) {
-                event.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        'code': editor.getValue(),
-                        'input': $('#input').val(),
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    success: function(response) {
-                        $('#output').text(response);
-                    },
-                    error: function(response) {
-                        console.log(response);
-                    }
-                });
-            });
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-8 offset-md-2">
+      <h2>{{ question.title }}</h2>
+      <p>{{ question.body }}</p>
 
-            $('#test-btn').click(function(event) {
-                event.preventDefault();
-                $.ajax({
-                    type: 'POST',
-                    data: {
-                        'code': editor.getValue(),
-                        csrfmiddlewaretoken: '{{ csrf_token }}'
-                    },
-                    dataType: 'json',
-                    success: function(results) {
-                        $('#test-output').empty();
-                        $.each(results, function(index, result) {
-                            $('#test-output').append('<p>Input: ' + result.input + '</p>');
-                            $('#test-output').append('<p>Output: ' + result.output + '</p>');
-                            $('#test-output').append('<p>Result: ' + result.result + '</p>');
-                            $('#test-output').append('<hr>');
-                        });
-                    },
-                    error: function(response) {
-                        console.log(response);
-                    }
-                });
-            });
+      <form method="POST" id="code-form">
+        {% csrf_token %}
+        <div class="form-group">
+          <label for="code">Write your code here:</label>
+          <textarea class="form-control" id="code" name="code" rows="10"></textarea>
+        </div>
 
+        <div class="form-group">
+          <label for="input">Input (optional):</label>
+          <textarea class="form-control" id="input" name="input" rows="5"></textarea>
+        </div>
 
+        <button type="submit" class="btn btn-primary" id="test-btn">Test Code</button>
+      </form>
 
-        });
-    </script>
-</head>
-<body>
-    <div id="editor" style="height: 500px; width: 50%;"></div>
-    <br>
-    <button id="compile-btn">Compile and Run</button>
+      {% if output %}
+      <hr>
+      <div class="card bg-light">
+        <div class="card-body">
+          <h4>Output:</h4>
+          <pre>{{ output }}</pre>
+        </div>
+      </div>
+      {% endif %}
 
-    <br><br>
-    <label for="input">Enter input for your program:</label><br>
-    <textarea id="input" rows="5" cols="50"></textarea><br>
-    <p>Output:</p>
-    <pre id="output"></pre>
+      {% if results %}
+      <hr>
+      <h4>Results:</h4>
+      {% for result in results %}
+      <div class="card bg-light mb-3">
+        <div class="card-body">
+          <h5>Input:</h5>
+         <tr>
+    <td>{{ result.input|join:', ' }}</td>
+    <td>{{ result.expected_output|join:', ' }}</td>
+    <td>{{ result.actual_output|join:', ' }}</td>
+    <td>{{ result.verdict|join:', ' }}</td>
+  </tr>
+        </div>
+      </div>
+      {% endfor %}
+      {% endif %}
 
-    <br><br>
-    <button id="test-btn">Test against input.txt and output.txt</button>
-    <p>Test Results:</p>
-    <pre id="test-output"></pre>
+    </div>
+  </div>
+</div>
 
+<script>
+  $(document).ready(function() {
+    $('#code-form').submit(function(event) {
+      event.preventDefault();
+      execute_code();
+    });
+  });
 
-</body>
-</html>
+  function execute_code() {
+    var code = $('#code').val().trim();
+    var input = $('#input').val().trim();
+
+    $.ajax({
+      url: '',
+      method: 'POST',
+      headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      data: {
+        'code': code,
+        'input': input,
+        'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
+      },
+      success: function(response) {
+        var output = response.trim();
+        $('#output').html(output);
+        $('#results').html('');
+      },
+      error: function(xhr, status, error) {
+        alert('Error: ' + error);
+      }
+    });
+  }
+</script>
+{% endblock %}

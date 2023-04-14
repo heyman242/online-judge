@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>C++ Compiler</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.4.12/ace.js"></script>
+    <script>
+        $(document).ready(function() {
+            // Initialize the Ace CodeEditor instance
+            var editor = ace.edit("editor");
+            editor.setTheme("ace/theme/twilight");
+            editor.session.setMode("ace/mode/c_cpp");
+
+            $('#compile-btn').click(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        'code': editor.getValue(),
+                        'input': $('#input').val(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    success: function(response) {
+                        $('#output').text(response);
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+            });
+
+            $('#test-btn').click(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    type: 'POST',
+                    data: {
+                        'code': editor.getValue(),
+                        csrfmiddlewaretoken: '{{ csrf_token }}'
+                    },
+                    dataType: 'json',
+                    success: function(results) {
+                        $('#test-output').empty();
+                        $.each(results, function(index, result) {
+                            $('#test-output').append('<p>Input: ' + result.input + '</p>');
+                            $('#test-output').append('<p>Output: ' + result.output + '</p>');
+                            $('#test-output').append('<p>Result: ' + result.result + '</p>');
+                            $('#test-output').append('<hr>');
+                        });
+                    },
+                    error: function(response) {
+                        console.log(response);
+                    }
+                });
+            });
+
+
+
+        });
+    </script>
+</head>
+<body>
+    <div id="editor" style="height: 500px; width: 50%;"></div>
+     {% csrf_token %}
+    <br>
+    <button id="compile-btn">Compile and Run</button>
+
+    <br><br>
+    <label for="input">Enter input for your program:</label><br>
+    <textarea id="input" rows="5" cols="50"></textarea><br>
+    <p>Output:</p>
+    <pre id="output"></pre>
+
+    <br><br>
+    <button id="test-btn">submit</button>
+    <p>Test Results:</p>
+    <pre id="test-output"></pre>
+
+
+</body>
+</html>

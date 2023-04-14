@@ -57,29 +57,58 @@ def main(request):
 #                 output = "No code provided"
 #
 #             return HttpResponse(output)
+#
 #         else:
 #             # Regular form submission
 #             code = request.POST.get('code')
-#             program_input = request.POST.get('input')
+#             results = []
+#             print("1")
 #
 #             if code is not None:
 #                 result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
 #                                         capture_output=True)
 #                 if result.returncode == 0:
-#                     if program_input is not None:
-#                         result = subprocess.run(['./program'], input=program_input.encode('utf-8'), capture_output=True)
-#                         output = result.stdout.decode('utf-8')
-#                     else:
-#                         output = "No input provided"
+#
+#                     testcases = TestCases.objects.filter(question=question)
+#                     for testcase in testcases:
+#                         input_lines = testcase.input.split("\n")
+#                         expected_output_lines = testcase.output.split("\n")
+#                         result = subprocess.run(['./program'], input=testcase.input.encode('utf-8'),
+#                                                 capture_output=True)
+#                         actual_output_lines = result.stdout.decode('utf-8').split("\n")
+#
+#                         if expected_output_lines == actual_output_lines:
+#                             results.append({'input': input_lines, 'expected_output': expected_output_lines,
+#                                             'actual_output': actual_output_lines, 'verdict': 'Accepted'})
+#                         else:
+#                             results.append({'input': input_lines, 'expected_output': expected_output_lines,
+#                                             'actual_output': actual_output_lines, 'verdict': 'Wrong Answer'})
 #                 else:
 #                     output = result.stderr.decode('utf-8')
+#                     return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
+#
+#                 return render(request, 'create_code_snippet.html', {'results': results, 'question': question})
+#
 #             else:
 #                 output = "No code provided"
-#
-#             return render(request, 'create_code_snippet.html', {'output': output}, {'question': question})
+#                 return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
 #     else:
-#         return render(request, 'create_code_snippet.html', )
+#         return render(request, 'create_code_snippet.html')
 
+
+def execute_code(code: str, program_input: str) -> str:
+    result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
+                            capture_output=True)
+    if result.returncode == 0:
+        if program_input is not None:
+            result = subprocess.run(['./program'], input=program_input.encode('utf-8'), capture_output=True)
+            output = result.stdout.decode('utf-8')
+        else:
+            output = "No input provided"
+    else:
+        output = result.stderr.decode('utf-8')
+
+    return output
 
 def create_code_snippet(request, id):
     if request.method == 'POST':
@@ -90,16 +119,7 @@ def create_code_snippet(request, id):
             program_input = request.POST.get('input')
 
             if code is not None:
-                result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
-                                        capture_output=True)
-                if result.returncode == 0:
-                    if program_input is not None:
-                        result = subprocess.run(['./program'], input=program_input.encode('utf-8'), capture_output=True)
-                        output = result.stdout.decode('utf-8')
-                    else:
-                        output = "No input provided"
-                else:
-                    output = result.stderr.decode('utf-8')
+                output = execute_code(code, program_input)
             else:
                 output = "No code provided"
 
@@ -113,17 +133,19 @@ def create_code_snippet(request, id):
                 result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
                                         capture_output=True)
                 if result.returncode == 0:
-                    testcases = TestCases.objects.filter(question=question)
+
+                    testcases = Testcase.objects.filter(question=question)
                     for testcase in testcases:
                         input_lines = testcase.input.split("\n")
                         expected_output_lines = testcase.output.split("\n")
-                        result = subprocess.run(['./program'], input=testcase.input.encode('utf-8'), capture_output=True)
-                        actual_output_lines = result.stdout.decode('utf-8').split("\n")
+                        actual_output_lines = execute_code(code, testcase.input).split("\n")
 
                         if expected_output_lines == actual_output_lines:
-                            results.append({'input': input_lines, 'expected_output': expected_output_lines, 'actual_output': actual_output_lines, 'verdict': 'Accepted'})
+                            results.append({'input': input_lines, 'expected_output': expected_output_lines,
+                                            'actual_output': actual_output_lines, 'verdict': 'Accepted'})
                         else:
-                            results.append({'input': input_lines, 'expected_output': expected_output_lines, 'actual_output': actual_output_lines, 'verdict': 'Wrong Answer'})
+                            results.append({'input': input_lines, 'expected_output': expected_output_lines,
+                                            'actual_output': actual_output_lines, 'verdict': 'Wrong Answer'})
                 else:
                     output = result.stderr.decode('utf-8')
                     return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
@@ -135,4 +157,3 @@ def create_code_snippet(request, id):
                 return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
     else:
         return render(request, 'create_code_snippet.html')
-

@@ -22,34 +22,26 @@
         <button type="submit" class="btn btn-primary" id="test-btn">Test Code</button>
       </form>
 
-      {% if output %}
-      <hr>
-      <div class="card bg-light">
-        <div class="card-body">
-          <h4>Output:</h4>
-          <pre>{{ output }}</pre>
-        </div>
-      </div>
-      {% endif %}
+      <div id="output-container"></div>
 
       {% if results %}
       <hr>
       <h4>Results:</h4>
       {% for result in results %}
-      <div class="card bg-light mb-3">
-        <div class="card-body">
-          <h5>Input:</h5>
-         <tr>
-    <td>{{ result.input|join:', ' }}</td>
-    <td>{{ result.expected_output|join:', ' }}</td>
-    <td>{{ result.actual_output|join:', ' }}</td>
-    <td>{{ result.verdict|join:', ' }}</td>
-  </tr>
+        <div class="card bg-light mb-3">
+          <div class="card-body">
+            <h5>Input:</h5>
+            <p>{{ result.input|join:'' }}</p>
+            <h5>Expected Output:</h5>
+            <p>{{ result.expected_output|join:' ' }}</p>
+            <h5>Actual Output:</h5>
+            <p>{{ result.actual_output|join:' ' }}</p>
+            <h5>Verdict:</h5>
+            <p>{{ result.verdict }}</p>
+          </div>
         </div>
-      </div>
       {% endfor %}
       {% endif %}
-
     </div>
   </div>
 </div>
@@ -76,9 +68,11 @@
         'csrfmiddlewaretoken': $('input[name=csrfmiddlewaretoken]').val()
       },
       success: function(response) {
+        var output_container = $('#output-container');
+        output_container.empty();
+
         var output = response.trim();
-        $('#output').html(output);
-        $('#results').html('');
+        output_container.append('<hr><h4>Output:</h4><pre>' + output + '</pre>');
       },
       error: function(xhr, status, error) {
         alert('Error: ' + error);

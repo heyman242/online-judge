@@ -114,59 +114,6 @@ def execute_code(code: str, program_input: str) -> str:
     return output
 
 
-# def create_code_snippet(request, id):
-#     if request.method == 'POST':
-#         question = Questions.objects.get(id=id)
-#         if request.headers.get('X-Requested-With') == 'XMLHttpRequest':
-#             # AJAX request
-#             code = request.POST.get('code')
-#             program_input = request.POST.get('input')
-#
-#             if code is not None:
-#                 output = execute_code(code, program_input)
-#             else:
-#                 output = "No code provided"
-#
-#             return HttpResponse(output)
-#         else:
-#             # Regular form submission
-#             code = request.POST.get('code')
-#             results = []
-#             print("1")
-#
-#             if code is not None:
-#                 result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
-#                                         capture_output=True)
-#                 if result.returncode == 0:
-#                     print("2")
-#
-#                     testcases = Testcase.objects.filter(question=question)
-#                     for testcase in testcases:
-#                         input_lines = testcase.input.split("\n")
-#                         expected_output_lines = testcase.output.split("\n")
-#                         actual_output_lines = execute_code(code, testcase.input).split("\n")
-#
-#                         if '\n'.join(expected_output_lines).strip() == '\n'.join(actual_output_lines).strip():
-#                             results.append({'input': input_lines, 'expected_output': expected_output_lines,
-#                                             'actual_output': actual_output_lines, 'verdict': 'Accepted'})
-#                         else:
-#                             results.append({'input': input_lines, 'expected_output': expected_output_lines,
-#                                             'actual_output': actual_output_lines, 'verdict': 'Wrong Answer'})
-#                 else:
-#                     output = result.stderr.decode('utf-8')
-#                     print(output)
-#                     return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
-#
-#                 return render(request, 'create_code_snippet.html', {'results': results, 'question': question})
-#
-#             else:
-#                 output = "No code provided"
-#                 return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
-#
-#     else:
-#         return render(request, 'create_code_snippet.html')
-
-
 def create_code_snippet(request, id):
     if request.method == 'POST':
         question = Questions.objects.get(id=id)
@@ -216,13 +163,3 @@ def create_code_snippet(request, id):
 
     else:
         return render(request, 'create_code_snippet.html')
-
-
-def count_distinct_characters(s):
-    results = []
-    testcases = s.split(",")
-    for testcase in testcases:
-        distinct_chars = set(testcase)
-        count = len(distinct_chars)
-        results.append(count)
-    return results

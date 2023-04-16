@@ -1,24 +1,20 @@
 {% extends 'master.html' %}
 
 {% block content %}
+
 <div class="container">
   <div class="row">
     <div class="col-md-8 offset-md-2">
-      <h2>{{ question.title }}</h2>
-      <p>{{ question.body }}</p>
-
       <form method="POST" id="code-form">
         {% csrf_token %}
         <div class="form-group">
           <label for="code">Write your code here:</label>
           <textarea class="form-control" id="code" name="code" rows="10"></textarea>
         </div>
-
         <div class="form-group">
           <label for="input">Input (optional):</label>
           <textarea class="form-control" id="input" name="input" rows="5"></textarea>
         </div>
-
         <button type="submit" class="btn btn-primary" id="test-btn">Test Code</button>
       </form>
 
@@ -49,7 +45,7 @@
 <script>
   $(document).ready(function() {
     $('#code-form').submit(function(event) {
-      event.preventDefault();
+      event.preventDefault(); // prevent default form submission behavior
       execute_code();
     });
   });
@@ -70,9 +66,10 @@
       success: function(response) {
         var output_container = $('#output-container');
         output_container.empty();
-
         var output = response.trim();
         output_container.append('<hr><h4>Output:</h4><pre>' + output + '</pre>');
+
+        $('#code').val(code); // set the code textarea value to the original code
       },
       error: function(xhr, status, error) {
         alert('Error: ' + error);
@@ -80,4 +77,5 @@
     });
   }
 </script>
+
 {% endblock %}

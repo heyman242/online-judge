@@ -5,12 +5,9 @@ from django.contrib import messages
 from .models import Questions, CodeSnippet, Testcase
 from django.http import JsonResponse
 from .forms import CodeSnippetForm
-import requests
 from django.conf import settings
 import subprocess
-from django.shortcuts import render
 import json
-import subprocess
 
 
 def questions(request):
@@ -51,7 +48,6 @@ def execute_code(code: str, program_input: str) -> str:
 
     return output
 
-
 def create_code_snippet(request, id):
     if request.method == 'POST':
         question = Questions.objects.get(id=id)
@@ -66,38 +62,44 @@ def create_code_snippet(request, id):
                 output = "No code provided"
 
             return HttpResponse(output)
+        
         else:
-            # Regular form submission
-            code = request.POST.get('code')
-            results = []
-
-            if code is not None:
-                result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
-                                        capture_output=True)
-                if result.returncode == 0:
-                    testcases = Testcase.objects.filter(question=question)
-                    for testcase in testcases:
-                        input_lines = testcase.input.split("\n")
-                        expected_output_lines = testcase.output.split("\n")
-                        actual_output_lines = execute_code(code, testcase.input).split("\n")
-
-                        verdict = 'Accepted'
-                        for expected, actual in zip(expected_output_lines, actual_output_lines):
-                            if expected.strip() != actual.strip():
-                                verdict = 'Wrong Answer'
-                                break
-
-                        results.append({'input': input_lines, 'expected_output': expected_output_lines,
-                                        'actual_output': actual_output_lines, 'verdict': verdict})
-                else:
-                    output = result.stderr.decode('utf-8')
-                    return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
-
-                return render(request, 'create_code_snippet.html', {'results': results, 'question': question})
-
-            else:
-                output = "No code provided"
-                return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
+            output = "No code provided"
+            return render(request, 'create_code_snippet.html', {'output': output, 'question': question})
 
     else:
-        return render(request, 'create_code_snippet.html')
+        question = Questions.objects.get(id=id)
+        return render(request, 'create_code_snippet.html', {'question': question, 'id': id})
+
+
+def result(request, id):
+    if request.method == 'POST':
+        question = Questions.objects.get(id=id)
+        # Regular form submission
+        code = request.POST.get('code')
+        results = []
+
+        if code is not None:
+            result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'), capture_output=True)
+            if result.returncode == 0:
+                testcases = Testcase.objects.filter(question=question)
+                for testcase in testcases:
+                    input_lines = testcase.input.split("\n")
+                    expected_output_lines = testcase.output.split("\n")
+                    actual_output_lines = execute_code(code, testcase.input).split("\n")
+
+                    verdict = 'Accepted'
+                    for expected, actual in zip(expected_output_lines, actual_output_lines):
+                        if expected.strip() != actual.strip():
+                            verdict = 'Wrong Answer'
+                            break
+
+                    results.append({'input': input_lines, 'expected_output': expected_output_lines,
+                                    'actual_output': actual_output_lines, 'verdict': verdict})
+
+                form_submitted = True
+                
+                return render(request, 'result.html', {'results': results, 'question': question, 'form_submitted': form_submitted})
+
+    else:
+        return render(request, 'create_code_snippet.html', {'question': Questions.objects.get(id=id)})

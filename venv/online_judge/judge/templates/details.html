@@ -2,18 +2,14 @@
 
 {% block content %}
 <head>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Editor</title>
 </head>
 <body>
-  <div class="row">
       <div class="col-7" style="height: 90vh; border: 1px solid rgb(0, 0, 0); margin-left: 300px;margin-top: 25px; overflow-y: auto;">
-        <div class="container-fluid">
           <h1><u>{{  myquestions.problem_title }}</u></h1>
-          </div>
+          
 
          <h2><strong>Problem Statement:</strong></h2>
           <pre>{{ myquestions.problem_description }}</pre>

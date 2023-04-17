@@ -1,0 +1,33 @@
+{% extends "master.html" %}
+{% block content %}
+
+<div class="container">
+    <div class="card text-center shadow mx-auto my-4" style="width: 20rem; height: 27rem;">
+        <div class="card-header">
+            <h3>Judge Verdict</h3>
+<section id="output-container">
+    {% if results %}
+    <hr>
+    
+    {% for result in results %}
+      <article class="card bg-light mb-3">
+        <section class="card-body">
+          <h5>Input:</h5>
+          <p>{{ result.input|join:'' }}</p>
+          <h5>Expected Output:</h5>
+          <p>{{ result.expected_output|join:' ' }}</p>
+          <h5>Actual Output:</h5>
+          <p>{{ result.actual_output|join:' ' }}</p>
+          <h5>Verdict:</h5>
+          <p>{{ result.verdict }}</p>
+        </section>
+      </article>
+    {% endfor %}
+    {% endif %}
+    </section>
+</div>
+</div>
+</div>
+
+
+{% endblock %}

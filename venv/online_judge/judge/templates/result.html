@@ -3,36 +3,54 @@
 {% block content %}
 
 <div class="container">
-    <div class="card text-center shadow mx-auto my-4" style="width: 20rem; height: 27rem;">
-        <div class="card-header">
-            <h3>Judge Verdict</h3>
+  <div class="row justify-content-center">
+    <div class="col-lg-8 col-md-10">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h4 class="m-0 font-weight-bold text-primary">Judge Verdict</h4>
         </div>
-        <section id="output-container">
+        <div class="card-body">
+          <div id="output-container">
             {% if results %}
-            <hr>
-            {% for result in results %}
-            <article class="card bg-light mb-3">
-                <section class="card-body">
-                    <h5>Input:</h5>
-                    {% for line in result.input %}
-                    <p>{{ line }}</p>
-                    {% endfor %}
-                    <h5>Expected Output:</h5>
-                    {% for line in result.expected_output %}
-                    <p>{{ line }}</p>
-                    {% endfor %}
-                    <h5>Actual Output:</h5>
-                    {% for line in result.actual_output %}
-                    <p>{{ line }}</p>
-                    {% endfor %}
-                    <h5>Verdict:</h5>
-                    <p>{{ result.verdict }}</p>
-                </section>
-            </article>
-            {% endfor %}
+              {% for result in results %}
+                <div class="card mb-3">
+                  <div class="card bg-dark text-white">
+                    <h5 class="m-0">{{ result.verdict }}</h5>
+                  </div>
+                  <div class="card-body">
+                    <div class="row">
+                      <div class="col-md-6">
+                        <h6 class="font-weight-bold">Input</h6>
+                        {% for line in result.input %}
+                          <p class="mb-2">{{ line }}</p>
+                        {% endfor %}
+                      </div>
+                      <div class="col-md-6">
+                        <h6 class="font-weight-bold">Expected Output</h6>
+                        {% for line in result.expected_output %}
+                          <p class="mb-2">{{ line }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                      <div class="col-md-12">
+                        <h6 class="font-weight-bold">Actual Output</h6>
+                        {% for line in result.actual_output %}
+                          <p class="mb-2">{{ line }}</p>
+                        {% endfor %}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            {% else %}
+              <p>No results to show.</p>
             {% endif %}
-        </section>
+          </div>
+        </div>
+      </div>
     </div>
+  </div>
 </div>
-
 {% endblock %}

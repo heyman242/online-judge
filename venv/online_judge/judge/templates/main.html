@@ -1,21 +1,65 @@
 {% extends "master.html" %}
 
 {% block title %}
-<div class = "main">ONLINE JUDGE
-</div>  
-
+  <div class="main">
+    <h1>ONLINE JUDGE</h1>
+  </div>
 {% endblock %}
 
 {% block content %}
   <div class="main">
-    <h1>ONLINE JUDGE</h1>
-
-    <h3>QUESTIONS</h3>
-  
-    <p>Check out <a href="questions/">QUESTIONS</a></p>
+    <h2>Practice your coding skills</h2>
+    <p>Explore a wide range of coding problems related to data structures and algorithms. Check out our:</p>
+    <ul>
+      <li><a href="questions/">Questions</a></li>
+      <li><a href="categories/">Categories</a></li>
+      <li><a href="leaderboard/">Leaderboard</a></li>
+    </ul>
   </div>
 
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
 
+    .main {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
 
+    h1, h2, h3 {
+      margin-top: 0;
+      font-weight: normal;
+    }
 
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: flex;
+      justify-content: space-between;
+    }
+
+    li {
+      display: inline-block;
+      margin-right: 20px;
+    }
+
+    a {
+      color: #008CBA;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    a:hover {
+      color: #005e7a;
+    }
+  </style>
 {% endblock %}

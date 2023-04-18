@@ -4,16 +4,61 @@
   ONLINE JUDGE - List of all questions
 {% endblock %}
 
-
 {% block content %}
   <div class="mycard">
     <h1><strong>QUESTIONS</strong></h1>
     <br>
     <ul>
-      {%for x in myquestions %}
-      <li><a href="details/{{ x.problem_id }}" style="font-weight:bold; font-size:28px;">{{ x.problem_title }}</a></li>
+      {% for x in myquestions %}
+      <li><a href="details/{{ x.problem_id }}" class="question-link">{{ x.problem_title }}</a></li>
       {% endfor %}
     </ul>
   </div>
-{% endblock %}
 
+  <style>
+    body {
+      background-color: #f5f5f5;
+      font-family: Arial, sans-serif;
+      color: #333;
+    }
+
+    .mycard {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 30px;
+      background-color: #fff;
+      border-radius: 5px;
+      box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 36px;
+      font-weight: normal;
+      color: #008CBA;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    li {
+      margin-bottom: 20px;
+    }
+
+    .question-link {
+      color: #008CBA;
+      font-size: 24px;
+      font-weight: bold;
+      text-decoration: none;
+      transition: color 0.2s ease;
+    }
+
+    .question-link:hover {
+      color: #005e7a;
+    }
+  </style>
+{% endblock %}

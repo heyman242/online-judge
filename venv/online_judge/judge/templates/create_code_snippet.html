@@ -7,26 +7,36 @@
           {% csrf_token %}
           <section class="form-group"><br>
               <label for="code"><h2>Write your code here:</h2></label>
-              <textarea class="form-control" id="code" name="code" rows="25" cols="40" style="width: 50%;"></textarea>
+              <div id="editor" style="width: 60%; height: 630px;"></div>
+              <textarea class="form-control" id="code" name="code" rows="25" cols="40" style="display:none;"></textarea>
           </section>
           <section class="form-group">
-              <label for="input" style="margin-left: 720px;margin-top: -630px;"><h2>Input:</h2></label>
-              <textarea class="form-control" id="input" name="input" rows="2" style="margin-left: 810px;margin-top: -630px; width: 25%;"></textarea>
+              <label for="input" style="margin-left: 850px;margin-top: -650px;"><h2>Sample Input:</h2></label>
+              <textarea class="form-control" id="input" name="input" rows="2" style="margin-left: 880px;margin-top: -600px; width: 15%;"></textarea>
           </section>
-          <button type="submit" class="btn btn-primary" id="compile-btn" style="margin-left: 420px;margin-top: -39px;">Compile and Run</button>
-          <button type="button" class="btn btn-success" id="run-btn" style="margin-left: 20px; margin-top: -39px;">Submit Code</button>
+          <button type="submit" class="btn btn-primary" id="compile-btn" style="margin-left: 550px;margin-top: 0px;">Compile and Run</button>
+          <button type="button" class="btn btn-success" id="run-btn" style="margin-left: 20px; margin-top: 0px;">Submit Code</button>
         </form>
         <br>
-        <div id="output-container" style="margin-left: 720px;margin-top: -600px;" ></div>
+        
+        <div id="output-container" style="margin-left: 880px;margin-top: -600px; max-width: 500px; height: 150px;"></div>
       </section>
     </section>
-  <script>
+    
+    <script>
     var form = document.getElementById("code-form");
-   
+
+    var editor = ace.edit("editor");
+    editor.setTheme("ace/theme/twilight");
+    editor.getSession().setMode("ace/mode/c_cpp");
+    editor.setOptions({
+    fontSize: "15pt"
+    });
 
     $(document).ready(function() {
     $('#code-form').submit(function(event) {
       event.preventDefault();
+      $('#code').val(editor.getValue());
       execute_code();
     });
   });

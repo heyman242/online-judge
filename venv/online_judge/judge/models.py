@@ -9,9 +9,8 @@ class Questions(models.Model):
     sample_input = models.TextField()
     sample_output = models.TextField()
 
-
-def __str__(self):
-    return self.problem_title
+    def __str__(self):
+        return self.problem_title
 
 
 class CodeSnippet(models.Model):
@@ -31,9 +30,11 @@ class CodeSnippet(models.Model):
 
 class Testcase(models.Model):
     question = models.ForeignKey(Questions, on_delete=models.CASCADE)
-    input = models.TextField()
-    output = models.TextField()
+    input = models.JSONField(default=list)
+    output = models.JSONField(default=list)
 
-
-
-# With this implementation, when you call str(test_case), it will return a string representation of the test case with the inputs and outputs fields as JSON strings.
+    def __str__(self):
+        return str({
+            "input": self.input,
+            "output": self.output
+        })

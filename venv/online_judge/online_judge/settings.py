@@ -39,6 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'judge',
     'django_ace',
+    'django.contrib.postgres',
+
 ]
 
 MIDDLEWARE = [

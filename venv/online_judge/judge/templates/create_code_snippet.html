@@ -2,30 +2,27 @@
 
 {% block content %}
   <section class="container-fluid">
-      <section class="col-md-6">
+    <section class="row">
         <form method="POST" id="code-form">
           {% csrf_token %}
-          <section class="form-group">
+          <section class="form-group"><br>
               <label for="code"><h2>Write your code here:</h2></label>
-              <textarea class="form-control" id="code" name="code" rows="25" cols="40"></textarea>
+              <textarea class="form-control" id="code" name="code" rows="25" cols="40" style="width: 50%;"></textarea>
           </section>
           <section class="form-group">
-              <label for="input" style="margin-left: 700px;margin-top: -680px;"><h2>Input:</h2></label>
-              <textarea class="form-control" id="input" name="input" rows="2" cols="10" style="margin-left: 700px;margin-top: -629px; margin-right: 100px;"></textarea>
+              <label for="input" style="margin-left: 720px;margin-top: -630px;"><h2>Input:</h2></label>
+              <textarea class="form-control" id="input" name="input" rows="2" style="margin-left: 810px;margin-top: -630px; width: 25%;"></textarea>
           </section>
-          <button type="submit" class="btn btn-primary" id="compile-btn">Compile and Test</button>
-          <button type="button" class="btn btn-success" id="run-btn">Run Code</button>
+          <button type="submit" class="btn btn-primary" id="compile-btn" style="margin-left: 420px;margin-top: -39px;">Compile and Run</button>
+          <button type="button" class="btn btn-success" id="run-btn" style="margin-left: 20px; margin-top: -39px;">Submit Code</button>
         </form>
         <br>
-        
-        <div id="output-container" ></div>
+        <div id="output-container" style="margin-left: 720px;margin-top: -600px;" ></div>
       </section>
-      
-    
-  </section>
-
+    </section>
   <script>
     var form = document.getElementById("code-form");
+   
 
     $(document).ready(function() {
     $('#code-form').submit(function(event) {
@@ -58,11 +55,12 @@
         alert('Error: ' + error);
       }
     });
-var runBtn = document.getElementById("run-btn");
-runBtn.addEventListener("click", function() {
-  form.action = "{% url 'judge:result' id=id %}";
-  form.submit();
-});
+    var runBtn = document.getElementById("run-btn");
+    runBtn.addEventListener("click", function() {
+     form.action = "{% url 'judge:result' id=id %}";
+    form.submit();
+    });
+
   }
   </script>
 {% endblock %}

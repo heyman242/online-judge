@@ -7,10 +7,11 @@
 
 {% block content %}
   <div class="mycard">
-    <h1><strong>Questions</strong></h1>
+    <h1><strong>QUESTIONS</strong></h1>
+    <br>
     <ul>
-      {% for x in myquestions %}
-          <h3><a href = "details/{{ x.problem_id }}"> {{ x.problem_title}}</a></h3>
+      {%for x in myquestions %}
+      <li><a href="details/{{ x.problem_id }}" style="font-weight:bold; font-size:28px;">{{ x.problem_title }}</a></li>
       {% endfor %}
     </ul>
   </div>

@@ -1,9 +1,9 @@
-FROM python:3.9
+FROM gcc:latest
 
-RUN apt-get update && apt-get install -y g++
+RUN apt-get update && apt-get install -y python3
 
-WORKDIR /app
+COPY judge/app.py /app/
 
-COPY . .
+WORKDIR /app/
 
-CMD [ "python", "app.py" ]
+CMD [ "python3", "app.py" ]

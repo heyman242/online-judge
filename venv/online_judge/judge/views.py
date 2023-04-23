@@ -5,7 +5,8 @@ from django.template import loader
 import docker
 from django.http import HttpResponse
 from .models import Questions, Testcase
-from ..app import execute_code_in_container
+# from .apps import execute_code
+from .docker_init import execute_code_in_docker_container 
 
 
 def questions(request):
@@ -45,8 +46,11 @@ def create_code_snippet(request, id):
             # print(program_input)
 
             if code is not None:
-                output = execute_code_in_container(code, program_input)
+                image = 'second'
+                print(image)
+                output = execute_code_in_docker_container(image, code, program_input)
                 print(output)
+
             else:
                 output = "Please provide a valid code."
 

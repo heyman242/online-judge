@@ -8,19 +8,19 @@
 </head>
 <body>
       <div class="col-7" style="height: 90vh; border: 1px solid rgb(0, 0, 0); margin-left: 300px;margin-top: 25px; overflow-y: auto;">
-          <h1><u>{{  myquestions.problem_title }}</u></h1>
+          <h1><u>{{  question_detail.problem_title }}</u></h1>
           
 
          <h2><strong>Problem Statement:</strong></h2>
-          <pre>{{ myquestions.problem_description }}</pre>
+          <pre>{{ question_detail.problem_description }}</pre>
           <h3>Sample Input:</h3>
-          <pre>{{ myquestions.sample_input }}</pre>
+          <pre>{{ question_detail.sample_input }}</pre>
 
           <h3>Sample Output:</h3>
-          <pre>{{ myquestions.sample_output }}</pre>
+          <pre>{{ question_detail.sample_output }}</pre>
 
           <br>
-          <h1><a href="{% url 'judge:create_code_snippet' myquestions.problem_id%}" class="btn btn-primary">submit code</a></h1>
+          <h1><a href="{% url 'judge:create_code_snippet' question_detail.problem_id%}" class="btn btn-primary">submit code</a></h1>
       </div>
  </body>
 <br><br>

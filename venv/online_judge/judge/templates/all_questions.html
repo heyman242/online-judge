@@ -9,15 +9,15 @@
     <h1><strong>QUESTIONS</strong></h1>
     <br>
     <ul>
-      {% for x in myquestions %}
-      <li><a href="details/{{ x.problem_id }}" class="question-link">{{ x.problem_title }}</a></li>
+      {% for question in myquestions %}
+        <li><a href="details/{{ question.problem_id }}" class="question-link">{{ forloop.counter }}. {{ question.problem_title }}</a></li>
       {% endfor %}
     </ul>
   </div>
 
   <style>
     body {
-      background-color: #f5f5f5;
+      background-color: #111;
       font-family: Arial, sans-serif;
       color: #333;
     }
@@ -26,7 +26,7 @@
       max-width: 800px;
       margin: 0 auto;
       padding: 30px;
-      background-color: #fff;
+      background-color: #111;
       border-radius: 5px;
       box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
       text-align: center;

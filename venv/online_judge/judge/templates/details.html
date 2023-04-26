@@ -6,9 +6,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Code Editor</title>
 </head>
-<body>
-      <div class="col-7" style="height: 90vh; border: 1px solid rgb(0, 0, 0); margin-left: 300px;margin-top: 25px; overflow-y: auto;">
-          <h1><u>{{  question_detail.problem_title }}</u></h1>
+<body style="background-color: #202020; color: #fff; font-family: Arial, sans-serif;">
+
+      <div class="col-7" style="height: 90vh; border: 1px solid rgb(255, 255, 255); margin-left: 300px;margin-top: 25px; overflow-y: auto;">
+          <h1 style="color: #008CBA; text-decoration: underline;">{{ question_detail.problem_title }}</h1>
           
 
          <h2><strong>Problem Statement:</strong></h2>
@@ -20,9 +21,31 @@
           <pre>{{ question_detail.sample_output }}</pre>
 
           <br>
-          <h1><a href="{% url 'judge:create_code_snippet' question_detail.problem_id%}" class="btn btn-primary">submit code</a></h1>
+          <h1><a href="{% url 'judge:create_code_snippet' question_detail.problem_id%}" style="background-color: #008CBA; color: #fff; padding: 2px; text-decoration: none; border-radius: 2px;">SUBMIT CODE</a></h1>
       </div>
  </body>
 <br><br>
+
+<style>
+    pre {
+      background-color: #1E1E1E;
+      color: #fff;
+      padding: 10px;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    h1, h2, h3 {
+      font-weight: normal;
+    }
+
+    a {
+      color: #fff;
+      transition: background-color 0.2s ease;
+    }
+
+   
+   
+</style>
 
 {% endblock %}

@@ -80,10 +80,10 @@ WSGI_APPLICATION = 'online_judge.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'judgedb',
-        'USER': 'himanshu',
-        'PASSWORD': 'aezakmi1234',
-        'HOST': '127.0.0.1', 
+        'NAME': 'postgres',
+        'USER': 'postgres',
+        'PASSWORD': 'Kssh1721',
+        'HOST': 'judgedb.cwuwlexp362e.eu-north-1.rds.amazonaws.com', 
         'PORT': '5432',
     }
 }

@@ -137,3 +137,8 @@ def result(request, id):
             # No code submitted
             results.append({'verdict': 'No Code Submitted'})
             return render(request, 'result.html', {'results': results, 'question': question})
+        
+
+
+
+

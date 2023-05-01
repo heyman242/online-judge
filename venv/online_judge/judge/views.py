@@ -126,12 +126,10 @@ def result(request, id):
                     })
 
                 form_submitted = True
-                print(results)
                 return render(request, 'result.html', {'results': results, 'question': question, 'form_submitted': form_submitted})
             else:
                 # Compilation error occurred
                 results.append({'verdict': 'Compilation Error'})
-                print(result.stderr)
                 return render(request, 'result.html', {'results': results, 'question': question})
         else:
             # No code submitted

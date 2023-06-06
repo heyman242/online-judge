@@ -6,13 +6,22 @@
 
 {% block content %}
   <div class="mycard">
-    <h1><strong>QUESTIONS</strong></h1>
-    <br>
-    <ul>
-      {% for question in myquestions %}
-        <li><a href="details/{{ question.problem_id }}" class="question-link">{{ forloop.counter }}. {{ question.problem_title }}</a></li>
-      {% endfor %}
-    </ul>
+    <table class="problem-table">
+      <thead>
+        <tr>
+          <th>#</th>
+          <th>PROBLEM TITLE</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for question in myquestions %}
+          <tr>
+            <td>{{ forloop.counter }}</td>
+            <td><a href="details/{{ question.problem_id }}" class="question-link">{{ question.problem_title }}</a></td>
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
   </div>
 
   <style>
@@ -39,14 +48,29 @@
       color: #008CBA;
     }
 
+    table.problem-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table.problem-table th,
+    table.problem-table td {
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    table.problem-table th {
+      font-weight: bold;
+      text-align: left;
+      background-color: #008CBA;
+      color: #fff;
+    }
+
     ul {
       list-style: none;
       padding: 0;
       margin: 0;
-    }
-
-    li {
-      margin-bottom: 20px;
     }
 
     .question-link {

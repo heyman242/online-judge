@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sign Up</title>
+    <style>
+        body {
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+    form {
+        background-color: #444;
+        border: 1px solid #ccc;
+        padding: 20px;
+        width: 400px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        border-radius: 5px;
+    }
+
+    label {
+        display: block;
+        margin-bottom: 10px;
+        font-weight: bold;
+        color: #fff;
+    }
+
+    input[type="text"],
+    input[type="password"],
+    input[type="number"] {
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #555;
+        color: #fff;
+    }
+
+    select {
+        padding: 10px;
+        border-radius: 3px;
+        border: 1px solid #ccc;
+        width: 100%;
+        margin-bottom: 20px;
+        background-color: #555;
+        color: #fff;
+    }
+
+    option {
+        background-color: #555;
+        color: #fff;
+    }
+
+    button[type="submit"] {
+        background-color: #4CAF50;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 3px;
+        cursor: pointer;
+        margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #3e8e41;
+    }
+</style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" required style="width: 380px; padding: 5px;"><br>
+
+        <label for="password1">Password:</label>
+        <input type="password" name="password1" required style="width: 380px; padding: 5px;"><br>
+
+        <label for="password2">Confirm Password:</label>
+        <input type="password" name="password2" required style="width: 380px; padding: 5px;"><br>
+
+        <label for="name">Name:</label>
+        <input type="text" name="name" required style="width: 380px; padding: 5px;"><br>
+
+        <label for="email_id">Email:</label>
+        <input type="email" name="email_id" required style="width: 380px; padding: 5px;"><br>
+
+        <br>
+
+        <button type="submit">Sign Up</button>
+    </form>
+
+</body>
+
+
+</html>

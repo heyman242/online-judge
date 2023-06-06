@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+        body {
+            background-color: #333;
+            font-family: Arial, sans-serif;
+            font-size: 16px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        form {
+            background-color: #444;
+            border: 1px solid #ccc;
+            padding: 20px;
+            width: 400px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            padding: 10px;
+            border-radius: 3px;
+            border: 1px solid #ccc;
+            width: 100%;
+            margin-bottom: 20px;
+        }
+
+        button[type="submit"] {
+            background-color: #4CAF50;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button[type="submit"]:hover {
+            background-color: #3e8e41;
+        }
+
+        .signup-link {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .signup-link a {
+            color: #4CAF50;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .page-title {
+            text-align: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 24px;
+            font-weight: bold;
+            color: #66BB55;
+        }
+    </style>
+</head>
+<body>
+    <form method="post">
+        {% csrf_token %}
+        <h1 class="page-title">QUIZ-ZONE</h1>
+        <label for="username">Username:</label>
+        <input type="text" name="username" required style="width: 200px; padding: 5px;">
+
+        <label for="password">Password:</label>
+        <input type="password" name="password" required style="width: 200px; padding: 5px;"><br>
+        <button type="submit">Log In</button>
+
+        <div class="signup-link">
+            <p>Don't have an account? <a href="/signup/">Sign Up</a></p>
+        </div>
+    </form>
+</body>
+</html>

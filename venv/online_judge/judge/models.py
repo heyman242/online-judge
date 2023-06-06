@@ -1,7 +1,7 @@
 from django.db import models
+from django.contrib.auth.models import User
 
 
-# Create your models here.
 class Questions(models.Model):
     problem_id = models.IntegerField(null=False)
     problem_title = models.CharField(max_length=255)
@@ -38,3 +38,13 @@ class Testcase(models.Model):
             "input": self.input,
             "output": self.output
         })
+
+
+class NewUser(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
+    id = models.CharField(max_length=5, unique=True)
+    email_id = models.CharField(max_length=100)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

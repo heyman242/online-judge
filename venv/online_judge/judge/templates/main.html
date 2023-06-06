@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block content %}
+  <div class="topnav">
+  <div class="login-button">
+    <button onclick="window.location.href='/login'">LOGIN</button>
+  </div>
+</div>
+
+
   <div class="main">
     <h2>Practice your coding skills with Data Structures and Algorithms</h2>
     <p>Challenge yourself with a variety of coding problems related to data structures and algorithms. Our extensive collection of questions will help you improve your coding skills. Check out our:</p>
@@ -14,12 +21,19 @@
       <li><h3><a href="questions/">Questions</a></h3></li>
     </ul>
   </div>
-  
+
   <style>
     body {
       background-color: #111;
       font-family: Arial, sans-serif;
       color: #fff;
+    }
+
+
+    .topnav .login-button {
+      position: absolute;
+      top: 5px;
+      right: 20px;
     }
 
     .main {

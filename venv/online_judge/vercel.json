@@ -2,7 +2,7 @@
     "version": 2,
     "builds": [
     {
-    "src": "venv/online_judge/online_judge/wsgi.py",
+    "src": "online_judge/wsgi.py",
     "use": "@vercel/python",
     "config": { "maxLambdaSize": "15mb", "runtime": "python3.9" }
     },
@@ -21,7 +21,7 @@
     },
     {
     "src": "/(.*)",
-    "dest": "venv/online_judge/online_judge/wsgi.py"
+    "dest": "online_judge/wsgi.py"
     }
     ]
     }

@@ -1,7 +1,6 @@
 import subprocess
 
 
-
 def execute_code(code: str, program_input: str) -> str:
 
     result = subprocess.run(['g++', '-x', 'c++', '-o', 'program', '-'], input=code.encode('utf-8'),
